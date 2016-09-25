@@ -1,0 +1,38 @@
+- Hadoop BAM:
+
+git clone https://github.com/HadoopGenomics/Hadoop-BAM.git
+version from POM: 7.7.1-SNAPSHOT
+Modify POM.XML to include correct version of Hadoop on Cypress and pointer to
+Hortonworks repository
+
+export HADOOP_BAM="/home/lngo/git/Hadoop-BAM/"
+hadoop version: 2.7.1.2.4.2.0-258
+hortonworks repository:
+<repository>
+           <id>hortonworks</id>
+           <url>http://repo.hortonworks.com/content/groups/public</url>
+       </repository>
+
+- Biodoop SEAL:
+git clone https://github.com/crs4/seal.git
+
+Module load anaconda/2.5.0
+pip install --user pydoop
+python setup.py build
+
+- SeqPig:
+git clone https://github.com/HadoopGenomics/SeqPig.git
+
+Also edit pom to fix hadoop and hortonwork repository versions
+Pig version: pig-0.15.0.2.4.2.0-258
+use classifier to grab the h2 version, then change the name of the jar and .shal
+file to math the required version listed in pom.xml
+
+
+mvn install:install-file -Dfile=lib/seal.jar -DgroupId=it.crs4 -DartifactId=seal -Dversion=devel-bf3090f -Dpackaging=jar -DgeneratePom=true
+mvn package -DskipTests
+
+version is copied from the seal
+
+export PIG_HOME="/usr/hdp/current/pig-client/"
+export SEQPIG_HOME="/home/lngo/git/SeqPig"
